@@ -38,12 +38,13 @@
   /* ---------- HERO ---------- */
   .hero{
     position:relative;
+    min-height:100svh;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:flex-end;
     text-align:center;
-    padding:0 24px 56px;
+    padding:0 24px 64px;
     overflow:hidden;
     background:var(--blue-950);
   }
@@ -51,7 +52,7 @@
     content:"";
     position:absolute;
     inset:0;
-    background:radial-gradient(60% 45% at 50% 30%, rgba(37,168,255,.14), transparent 70%);
+    background:radial-gradient(60% 45% at 50% 25%, rgba(37,168,255,.14), transparent 70%);
     animation:breathe 9s ease-in-out infinite;
     mix-blend-mode:screen;
     z-index:1;
@@ -61,30 +62,30 @@
     0%,100%{opacity:.5;transform:scale(1)}
     50%{opacity:1;transform:scale(1.08)}
   }
-  /* foto ocupando toda a largura — mostrada INTEIRA (sem corte) */
+  /* foto de FUNDO cobrindo a tela inteira (como a referência) */
   .hero-photo{
-    position:relative;
+    position:absolute;
+    inset:0;
     z-index:0;
-    /* anula o padding lateral do .hero para sangrar até a borda */
-    width:100vw;
-    margin-left:calc(50% - 50vw);
-    margin-right:calc(50% - 50vw);
-    /* MESMA proporção da foto (16:9). Se reexportar noutra proporção,
-       ajuste aqui: ex. 3/2, 4/3. Assim a foto aparece inteira, sem faixas. */
-    aspect-ratio:16 / 9;
     /* TROQUE pela foto do Erico */
     background-image:url('img/hero.png');
     background-size:cover;
-    background-position:center center;
+    background-position:center 22%;
     background-repeat:no-repeat;
   }
-  /* esfumaça a base da foto pra ela dissolver no fundo, sob o texto */
+  /* gradiente escurece a base e as laterais pra o texto ler bem por cima */
   .hero-photo::after{
     content:"";
-    position:absolute;
-    left:0;right:0;bottom:0;
-    height:45%;
-    background:linear-gradient(to bottom, transparent 0%, var(--blue-950) 92%);
+    position:absolute;inset:0;
+    background:
+      linear-gradient(to bottom,
+        rgba(5,7,9,.35) 0%,
+        rgba(5,7,9,0) 28%,
+        rgba(5,7,9,.55) 60%,
+        rgba(5,7,9,.92) 82%,
+        var(--blue-950) 100%),
+      linear-gradient(to right,
+        var(--blue-950) 0%, transparent 20%, transparent 80%, var(--blue-950) 100%);
     pointer-events:none;
   }
   .hero-inner{
@@ -92,7 +93,6 @@
     z-index:2;
     max-width:760px;
     width:100%;
-    margin-top:-40px;   /* puxa o texto pra cima, sobrepondo a base da foto */
   }
 
   /* sequência de abertura */
