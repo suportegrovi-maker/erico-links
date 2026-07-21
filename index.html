@@ -811,6 +811,25 @@ const CARDS = [
     update();
   })();
 })();
+
+/* ---- Auto-altura do iframe (MakeFunnels) ----
+   Avisa a página-pai a altura real, pra o iframe crescer sozinho
+   e não ficar com barra de rolagem interna. */
+(function(){
+  if (window.self === window.top) return; // só age quando está dentro de um iframe
+  function enviarAltura(){
+    var h = document.body.scrollHeight;
+    parent.postMessage({ ericoLinksHeight: h }, '*');
+  }
+  window.addEventListener('load', enviarAltura);
+  window.addEventListener('resize', enviarAltura);
+  // reenvia quando imagens/cards carregam e mudam a altura
+  if ('ResizeObserver' in window){
+    new ResizeObserver(enviarAltura).observe(document.body);
+  } else {
+    setInterval(enviarAltura, 1000);
+  }
+})();
 </script>
 
 </body>
